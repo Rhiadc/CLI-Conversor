@@ -48,7 +48,6 @@ defmodule CliConversor.CLI.CurrencyChoice do
       name_currency_to: chosen_currency.name
     }
     |> CliConversor.Interaction.InteractionAgent.add
-    CliConversor.Interaction.InteractionAgent.value
   end
 
   defp select_currency_to(_interaction) do

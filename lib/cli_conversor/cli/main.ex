@@ -19,6 +19,7 @@ defmodule CliConversor.CLI.Main do
   end
 
   defp currency_choice do
+    value =
     CliConversor.CLI.CurrencyChoice.start()
   end
 end

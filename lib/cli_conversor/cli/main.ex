@@ -1,6 +1,8 @@
 defmodule CliConversor.CLI.Main do
 
   alias Mix.Shell.IO, as: Shell
+  alias CliConversor.Interaction.InteractionAgent
+  import CliConversor.CLI.BaseCommands
 
   @spec start_conversor :: :ok
   def start_conversor do
@@ -19,7 +21,18 @@ defmodule CliConversor.CLI.Main do
   end
 
   defp currency_choice do
-    value =
-    CliConversor.CLI.CurrencyChoice.start()
+    case CliConversor.CLI.CurrencyChoice.start() do
+      :ok -> ask_for_amount()
+      :error -> start_conversor()
+    end
+  end
+
+  defp ask_for_amount do
+    Shell.cmd("clear")
+    "Please, enter the amount you want to convert\n"
+    |> Shell.prompt
+    |> parse_amount()
+    |> add_amount_to_interaction()
+    InteractionAgent.value
   end
 end

@@ -10,6 +10,7 @@ defmodule CliConversor.CLI.BaseCommands do
     options
   end
 
+  #perguntas (nova conversão, history, exit)
   def generate_question(options) do
     opt = options
     |> Enum.with_index(1)

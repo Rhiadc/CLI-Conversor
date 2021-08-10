@@ -1,6 +1,5 @@
 defmodule CliConversor.CLI.CurrencyChoice do
   alias CliConversor.Currency.CurrencyServices
-  alias CliConversor.Interaction
   alias Mix.Shell.IO, as: Shell
   import CliConversor.CLI.BaseCommands
 
@@ -25,10 +24,10 @@ defmodule CliConversor.CLI.CurrencyChoice do
     |> confirm_currency(interaction)
   end
 
-  #defp verify_
+
   defp confirm_currency(chosen_currency, interaction) do
     Shell.cmd("clear")
-    Shell.info("Selected curressncy: " <> chosen_currency.name)
+    Shell.info("Selected currency: " <> chosen_currency.name)
     if Shell.yes?("Confirm?"), do: modify_struct(chosen_currency, interaction), else: start()
   end
 
@@ -43,13 +42,13 @@ defmodule CliConversor.CLI.CurrencyChoice do
   end
 
   defp modify_struct(chosen_currency, %{currency_to: nil, name_currency_to: nil} = interaction) do
-    interaction = %{
+    _interaction = %{
       interaction |
       currency_to: chosen_currency.asset_id,
       name_currency_to: chosen_currency.name
     }
     |> CliConversor.Interaction.InteractionAgent.add
-    interaction
+    CliConversor.Interaction.InteractionAgent.value
   end
 
   defp select_currency_to(_interaction) do

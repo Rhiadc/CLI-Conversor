@@ -40,14 +40,18 @@ defmodule CliConversor.Currency.CurrencyServices do
       end)
   end
 
-  defp generate_map_reference(list) do
-    list
-    |> Enum.into(%{}, fn [a, _b, _c, d] -> {a, d} end)
-  end
 
   defp order_list_by_name(list) do
     list
     |> Enum.sort(&(&1 < &2))
     |> Enum.filter(fn [_asset, _name, _type, price] -> price != nil end)
+  end
+
+  def return_final_list do
+    crypto = get_crypto_list()
+    currency = get_currency_list()
+    total_list = crypto ++ currency ++ [%Currency{asset_id: "USD", name: "US Dollar", type_is_crypto: 0, price_usd: 1}]
+
+    total_list
   end
 end

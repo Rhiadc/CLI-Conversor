@@ -7,7 +7,8 @@ defmodule CliConversor.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {CliConversor.Interaction.InteractionAgent, %CliConversor.Interaction{}}
+      {CliConversor.Interaction.InteractionAgent, %CliConversor.Interaction{}},
+      {CliConversor.Currency.CurrencyAgent, CliConversor.Currency.CurrencyServices.return_final_list}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

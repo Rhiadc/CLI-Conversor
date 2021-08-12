@@ -12,16 +12,15 @@ defmodule CliConversor.CLI.BaseCommands do
     options
   end
 
-  #perguntas (nova conversão, history, exit)
   @spec generate_question(any) :: <<_::64, _::_*8>>
   def generate_question(options) do
     opt = options
     |> Enum.with_index(1)
-    |> Enum.map(fn {c,b} -> [b, c] end)
+    |> Enum.map(fn {[id, name], index} -> [index, id, name] end)
     |> Enum.map(fn g-> Enum.join(g, " - ") end)
-    |> Enum.join(" | ")
+    |> Enum.join("\n ")
 
-    "Which one? [#{opt}]\n"
+    "Escolha pelo numero da moeda: \n#{opt}\n"
   end
 
   def generate_question_menu(options) do
@@ -32,15 +31,6 @@ defmodule CliConversor.CLI.BaseCommands do
     |> Enum.join(", ")
 
     "Which one? [#{opt}]\n"
-  end
-
-
-  @spec add_amount_to_interaction(any) :: :ok
-  def add_amount_to_interaction(amount) do
-    interaction = CliConversor.Interaction.InteractionAgent.value
-    interaction = %{ interaction | amount: amount}
-    CliConversor.Interaction.InteractionAgent.add(interaction)
-    amount
   end
 
   def menu_options do
@@ -67,5 +57,13 @@ defmodule CliConversor.CLI.BaseCommands do
     Shell.error("Invalid Option")
     Shell.prompt("Press Enter to try again")
     Shell.cmd("clear")
+  end
+
+  def get_time_now do
+    date_now = NaiveDateTime.utc_now
+    string_date = "#{date_now.day}/#{date_now.month}/#{date_now.year} - "
+    string_time = "#{date_now.hour}:#{date_now.minute}:#{date_now.second} - "
+    string_date_time = string_date <> string_time
+    string_date_time
   end
 end

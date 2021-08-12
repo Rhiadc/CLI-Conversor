@@ -15,7 +15,7 @@ defmodule CliConversor.CLI.CurrencyChoice do
 
     answer =
       total_list
-    |> Enum.map(&(&1.asset_id))
+    |> Enum.map(fn currency -> [currency.asset_id, currency.name] end)
     |> generate_question
     |> Shell.prompt
     |> Integer.parse
@@ -27,8 +27,6 @@ defmodule CliConversor.CLI.CurrencyChoice do
       {option, _} ->
         find_currency_by_index.(option - 1) |> confirm_currency(interaction)
     end
-
-
   end
 
 

@@ -2,6 +2,7 @@ defmodule CliConversor.CLI.Main do
 
   alias Mix.Shell.IO, as: Shell
   alias CliConversor.Interaction.InteractionAgent
+  alias CliConversor.Interaction
   import CliConversor.CLI.BaseCommands
 
   @spec start_conversor :: :ok
@@ -39,8 +40,9 @@ defmodule CliConversor.CLI.Main do
       :error ->
         display_invalid_option()
         ask_for_amount_convert()
-      {option, _} ->
-        add_amount_to_interaction(option) |> CliConversor.Currency.convert_values()
+      {value, _} ->
+        value_float = value / 1.0
+        Interaction.add_amount_to_interaction(value_float) |> CliConversor.Currency.convert_values()
     end
 
     menu_options()
@@ -49,13 +51,14 @@ defmodule CliConversor.CLI.Main do
 
   @spec handle_answer(any) :: <<_::64, _::_*80>>
   def handle_answer(option) do
-    IO.inspect option
     case option do
 
-      0 -> start_conversor()
-      1 -> CliConversor.Currency.swap_values()
-      2 -> "IMPRIMIR HISTORICO"
-      3 -> "Tchau!!!"
+      0 ->  start_conversor()
+      1 ->  CliConversor.Currency.swap_values()
+      2 ->  Shell.cmd("clear")
+            CliConversor.File.FileActions.get_history()
+            menu_options()
+      3 ->  exit_message()
       _ ->
         display_invalid_option()
         menu_options()

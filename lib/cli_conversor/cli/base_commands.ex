@@ -52,6 +52,15 @@ defmodule CliConversor.CLI.BaseCommands do
 
   end
 
+  def get_time_now do
+    date_now = NaiveDateTime.utc_now
+    string_date = "#{date_now.day}/#{date_now.month}/#{date_now.year} - "
+    string_time = "#{date_now.hour}:#{date_now.minute}:#{date_now.second} - "
+    string_date_time = string_date <> string_time
+    string_date_time
+  end
+
+
   def display_invalid_option do
     Shell.cmd("clear")
     Shell.error("Invalid Option")
@@ -59,11 +68,9 @@ defmodule CliConversor.CLI.BaseCommands do
     Shell.cmd("clear")
   end
 
-  def get_time_now do
-    date_now = NaiveDateTime.utc_now
-    string_date = "#{date_now.day}/#{date_now.month}/#{date_now.year} - "
-    string_time = "#{date_now.hour}:#{date_now.minute}:#{date_now.second} - "
-    string_date_time = string_date <> string_time
-    string_date_time
+  def exit_message do
+    Shell.cmd("clear")
+    Shell.info("Obrigado por usar este conversor!")
+    Shell.info("Até a proxima...")
   end
 end

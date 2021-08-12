@@ -1,6 +1,6 @@
 # CliConversor
 
-**Run** > mix deps.get <br/>
+**Run** <br/>> mix deps.get <br/>
         > mix deps.compile <br/>
         > mix start <br/>
 

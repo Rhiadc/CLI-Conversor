@@ -9,10 +9,14 @@ defmodule CliConversor.Currency do
 
   def convert_values(amount) do
     int_struct = InteractionAgent.value
-    converted = amount * (int_struct.currency_from_price / int_struct.currency_to_price) |> Float.ceil(2)
+    converted = amount * (int_struct.currency_from_price / int_struct.currency_to_price) |> Float.floor(2)
+
     Shell.cmd("clear")
-    IO.puts(
-      "\n#{amount} #{int_struct.name_currency_from} is equivalent to #{converted} #{int_struct.name_currency_to}\n")
+    converted_output = "#{amount} #{int_struct.name_currency_from} is equivalent to #{converted} #{int_struct.name_currency_to}\n"
+    log = "#{BaseCommands.get_time_now()}" <> converted_output
+    CliConversor.File.FileActions.write_and_return(log)
+    Shell.info(converted_output)
+
   end
 
   def swap_values do

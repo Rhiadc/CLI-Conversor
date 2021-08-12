@@ -1,5 +1,4 @@
 defmodule CliConversor.CLI.CurrencyChoice do
-  alias CliConversor.Currency.CurrencyServices
   alias Mix.Shell.IO, as: Shell
   import CliConversor.CLI.BaseCommands
 
@@ -25,7 +24,12 @@ defmodule CliConversor.CLI.CurrencyChoice do
         display_invalid_option()
         start()
       {option, _} ->
-        find_currency_by_index.(option - 1) |> confirm_currency(interaction)
+        if option > Enum.count(total_list) do
+          display_invalid_option()
+          start()
+        else
+          find_currency_by_index.(option - 1) |> confirm_currency(interaction)
+        end
     end
   end
 

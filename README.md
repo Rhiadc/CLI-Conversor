@@ -1,6 +1,8 @@
 # CliConversor
 
-**TODO: Add description**
+**Run** mix deps.get
+        mix deps.compile
+        mix start
 
 ## Installation
 
